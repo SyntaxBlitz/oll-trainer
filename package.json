@@ -1,0 +1,23 @@
+{
+  "name": "react-fun",
+  "version": "1.0.0",
+  "description": "React fun! Will probably turn into an OLL trainer.",
+  "main": "index.js",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "browserify": "^13.1.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "author": "Timothy J. Aveni (me@timothyaveni.com)",
+  "license": "MIT"
+}
