@@ -35,6 +35,20 @@ body.alg-generator {
 	text-align: center;
 }
 
+a.backSelector {
+	color: #6A656E;
+	text-decoration: none;
+}
+
+a.backSelector:hover {
+	color: #2A044A;
+}
+
+a.backSelector.active {
+	color: #2A044A;
+	text-decoration: underline;
+}
+
 svg.cubeDiagram {
 	padding: 10px;
 }

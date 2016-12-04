@@ -217,7 +217,8 @@ class AlgGenerator extends React.Component {
 
 		this.keyDown = this.keyDown.bind(this);
 		this.generate = this.generate.bind(this);
-		this.checkedChanged = this.checkedChanged.bind(this);
+		this.changeToTop = this.changeToTop.bind(this);
+		this.changeToBack = this.changeToBack.bind(this);
 	}
 
 	keyDown (event) {
@@ -262,8 +263,14 @@ class AlgGenerator extends React.Component {
 		this.setState({ollChoices: this.getOllChoices(nextProps)});
 	}
 
-	checkedChanged (event) {	// #vb.net
-		this.props.setOnBack(event.target.checked);
+	changeToTop (event) {
+		this.props.setOnBack(false);
+		event.preventDefault();
+	}
+
+	changeToBack (event) {
+		this.props.setOnBack(true);
+		event.preventDefault();
 	}
 
 	render () {
@@ -278,10 +285,19 @@ class AlgGenerator extends React.Component {
 			return (
 				<div>
 					<div dangerouslySetInnerHTML={{__html: this.props.lastGenerated}} className="display"></div>
-					<label className="generateCheck"><input type="checkbox" onChange={this.checkedChanged} checked={this.props.onBack} /> Generate on back</label>
 					<div className="instructions">
 						<p onClick={this.generate}>{belowBox}</p>
 						<p onClick={this.props.switchToOll} className="with-pointer">choose oll</p>
+						<p>
+							generate on&nbsp;
+							<a href="#" onClick={this.changeToTop} className={'backSelector' + (this.props.onBack ? '' : ' active')}>
+								top
+							</a>
+							&nbsp;|&nbsp;
+							<a href="#" onClick={this.changeToBack} className={'backSelector' + (this.props.onBack ? ' active' : '')}>
+								back
+							</a>
+						</p>
 					</div>
 				</div>
 			);

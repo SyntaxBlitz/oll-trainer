@@ -294,7 +294,8 @@ var AlgGenerator = function (_React$Component3) {
 
 		_this5.keyDown = _this5.keyDown.bind(_this5);
 		_this5.generate = _this5.generate.bind(_this5);
-		_this5.checkedChanged = _this5.checkedChanged.bind(_this5);
+		_this5.changeToTop = _this5.changeToTop.bind(_this5);
+		_this5.changeToBack = _this5.changeToBack.bind(_this5);
 		return _this5;
 	}
 
@@ -347,10 +348,16 @@ var AlgGenerator = function (_React$Component3) {
 			this.setState({ ollChoices: this.getOllChoices(nextProps) });
 		}
 	}, {
-		key: "checkedChanged",
-		value: function checkedChanged(event) {
-			// #vb.net
-			this.props.setOnBack(event.target.checked);
+		key: "changeToTop",
+		value: function changeToTop(event) {
+			this.props.setOnBack(false);
+			event.preventDefault();
+		}
+	}, {
+		key: "changeToBack",
+		value: function changeToBack(event) {
+			this.props.setOnBack(true);
+			event.preventDefault();
 		}
 	}, {
 		key: "render",
@@ -368,12 +375,6 @@ var AlgGenerator = function (_React$Component3) {
 					null,
 					React.createElement("div", { dangerouslySetInnerHTML: { __html: this.props.lastGenerated }, className: "display" }),
 					React.createElement(
-						"label",
-						{ className: "generateCheck" },
-						React.createElement("input", { type: "checkbox", onChange: this.checkedChanged, checked: this.props.onBack }),
-						" Generate on back"
-					),
-					React.createElement(
 						"div",
 						{ className: "instructions" },
 						React.createElement(
@@ -385,6 +386,22 @@ var AlgGenerator = function (_React$Component3) {
 							"p",
 							{ onClick: this.props.switchToOll, className: "with-pointer" },
 							"choose oll"
+						),
+						React.createElement(
+							"p",
+							null,
+							"generate on\xA0",
+							React.createElement(
+								"a",
+								{ href: "#", onClick: this.changeToTop, className: 'backSelector' + (this.props.onBack ? '' : ' active') },
+								"top"
+							),
+							"\xA0|\xA0",
+							React.createElement(
+								"a",
+								{ href: "#", onClick: this.changeToBack, className: 'backSelector' + (this.props.onBack ? ' active' : '') },
+								"back"
+							)
 						)
 					)
 				);
