@@ -266,20 +266,15 @@ var AlgGenerator = function (_React$Component3) {
 
 		var _this5 = _possibleConstructorReturn(this, (AlgGenerator.__proto__ || Object.getPrototypeOf(AlgGenerator)).call(this, props));
 
-		_this5.state = { onBack: false, display: '', ollChoices: _this5.getOllChoices(_this5.props) };
+		_this5.state = { ollChoices: _this5.getOllChoices(_this5.props) };
 
-		_this5.updateOnBackCheck = _this5.updateOnBackCheck.bind(_this5);
 		_this5.keyDown = _this5.keyDown.bind(_this5);
 		_this5.generate = _this5.generate.bind(_this5);
+		_this5.checkedChanged = _this5.checkedChanged.bind(_this5);
 		return _this5;
 	}
 
 	_createClass(AlgGenerator, [{
-		key: "updateOnBackCheck",
-		value: function updateOnBackCheck(event) {
-			this.setState({ onBack: event.target.checked });
-		}
-	}, {
 		key: "keyDown",
 		value: function keyDown(event) {
 			if (event.keyCode === 32) {
@@ -296,7 +291,7 @@ var AlgGenerator = function (_React$Component3) {
 
 			var ollCase = this.state.ollChoices[Math.floor(Math.random() * this.state.ollChoices.length)];
 
-			this.setState({ display: createOll(this.props.oll, ollCase, this.state.onBack) });
+			this.props.setLastGenerated(createOll(this.props.oll, ollCase, this.props.onBack));
 		}
 	}, {
 		key: "componentDidMount",
@@ -323,7 +318,13 @@ var AlgGenerator = function (_React$Component3) {
 	}, {
 		key: "componentWillReceiveProps",
 		value: function componentWillReceiveProps(nextProps) {
-			this.setState({ ollChoices: getOllChoices(nextProps) });
+			this.setState({ ollChoices: this.getOllChoices(nextProps) });
+		}
+	}, {
+		key: "checkedChanged",
+		value: function checkedChanged(event) {
+			// #vb.net
+			this.props.setOnBack(event.target.checked);
 		}
 	}, {
 		key: "render",
@@ -339,11 +340,11 @@ var AlgGenerator = function (_React$Component3) {
 				return React.createElement(
 					"div",
 					null,
-					React.createElement("h1", { dangerouslySetInnerHTML: { __html: this.state.display } }),
+					React.createElement("h1", { dangerouslySetInnerHTML: { __html: this.props.lastGenerated } }),
 					React.createElement(
 						"label",
 						null,
-						React.createElement("input", { type: "checkbox", onChange: this.updateOnBackCheck, checked: this.state.onBack }),
+						React.createElement("input", { type: "checkbox", onChange: this.checkedChanged, checked: this.props.onBack }),
 						" Generate on back"
 					),
 					React.createElement(
@@ -379,9 +380,21 @@ var OllTrainer = function (_React$Component4) {
 			activeArray.push(true);
 		}
 
-		_this6.state = { active: activeArray, stage: 'generating algorithms', data: { appearances: null, multiSelectors: null, oll: null }, loaded: false };
+		_this6.state = {
+			active: activeArray,
+			onBack: false,
+
+			lastGenerated: '',
+			stage: 'generating algorithms',
+			data: {
+				appearances: null,
+				multiSelectors: null,
+				oll: null },
+			loaded: false };
 
 		_this6.updateActive = _this6.updateActive.bind(_this6);
+		_this6.setOnBack = _this6.setOnBack.bind(_this6);
+		_this6.setLastGenerated = _this6.setLastGenerated.bind(_this6);
 		return _this6;
 	}
 
@@ -411,6 +424,16 @@ var OllTrainer = function (_React$Component4) {
 			};
 		}
 	}, {
+		key: "setOnBack",
+		value: function setOnBack(onBack) {
+			this.setState({ onBack: onBack });
+		}
+	}, {
+		key: "setLastGenerated",
+		value: function setLastGenerated(lastGenerated) {
+			this.setState({ lastGenerated: lastGenerated });
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			if (!this.state.loaded) {
@@ -436,7 +459,14 @@ var OllTrainer = function (_React$Component4) {
 				return React.createElement(
 					"div",
 					null,
-					React.createElement(AlgGenerator, { oll: this.state.data.oll, active: this.state.active }),
+					React.createElement(AlgGenerator, {
+						oll: this.state.data.oll,
+						active: this.state.active,
+						lastGenerated: this.state.lastGenerated,
+						setLastGenerated: this.setLastGenerated,
+						onBack: this.state.onBack,
+						setOnBack: this.setOnBack
+					}),
 					React.createElement(
 						"button",
 						{ onClick: this.getStageSetter('choosing oll') },

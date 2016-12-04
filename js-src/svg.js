@@ -199,15 +199,11 @@ class AlgGenerator extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {onBack: false, display: '', ollChoices: this.getOllChoices(this.props)};
+		this.state = {ollChoices: this.getOllChoices(this.props)};
 
-		this.updateOnBackCheck = this.updateOnBackCheck.bind(this);
 		this.keyDown = this.keyDown.bind(this);
 		this.generate = this.generate.bind(this);
-	}
-
-	updateOnBackCheck (event) {
-		this.setState({onBack: event.target.checked});
+		this.checkedChanged = this.checkedChanged.bind(this);
 	}
 
 	keyDown (event) {
@@ -224,7 +220,7 @@ class AlgGenerator extends React.Component {
 
 		var ollCase = this.state.ollChoices[Math.floor(Math.random() * this.state.ollChoices.length)];
 
-		this.setState({display: createOll(this.props.oll, ollCase, this.state.onBack)});
+		this.props.setLastGenerated(createOll(this.props.oll, ollCase, this.props.onBack));
 	}
 
 	componentDidMount () {
@@ -247,7 +243,11 @@ class AlgGenerator extends React.Component {
 	}
 
 	componentWillReceiveProps (nextProps) {
-		this.setState({ollChoices: getOllChoices(nextProps)});
+		this.setState({ollChoices: this.getOllChoices(nextProps)});
+	}
+
+	checkedChanged (event) {	// #vb.net
+		this.props.setOnBack(event.target.checked);
 	}
 
 	render () {
@@ -261,8 +261,8 @@ class AlgGenerator extends React.Component {
 
 			return (
 				<div>
-					<h1 dangerouslySetInnerHTML={{__html: this.state.display}}></h1>
-					<label><input type="checkbox" onChange={this.updateOnBackCheck} checked={this.state.onBack} /> Generate on back</label>
+					<h1 dangerouslySetInnerHTML={{__html: this.props.lastGenerated}}></h1>
+					<label><input type="checkbox" onChange={this.checkedChanged} checked={this.props.onBack} /> Generate on back</label>
 					<p onClick={this.generate}>{belowBox}</p>
 				</div>
 			);
@@ -286,9 +286,21 @@ class OllTrainer extends React.Component {
 			activeArray.push(true);
 		}
 
-		this.state = {active: activeArray, stage: 'generating algorithms', data: {appearances: null, multiSelectors: null, oll: null}, loaded: false};
+		this.state = {
+			active: activeArray,
+			onBack: false,
+
+			lastGenerated: '',
+			stage: 'generating algorithms',
+			data: {
+				appearances: null,
+				multiSelectors: null,
+				oll: null},
+			loaded: false};
 
 		this.updateActive = this.updateActive.bind(this);
+		this.setOnBack = this.setOnBack.bind(this);
+		this.setLastGenerated = this.setLastGenerated.bind(this);
 	}
 
 	componentDidMount () {
@@ -303,6 +315,14 @@ class OllTrainer extends React.Component {
 
 	getStageSetter (stage) {
 		return () => this.setState({stage: stage});
+	}
+
+	setOnBack (onBack) {
+		this.setState({onBack: onBack});
+	}
+
+	setLastGenerated (lastGenerated) {
+		this.setState({lastGenerated: lastGenerated});
 	}
 
 	render () {
@@ -322,7 +342,14 @@ class OllTrainer extends React.Component {
 		} else if (this.state.stage === 'generating algorithms') {
 			return (
 				<div>
-					<AlgGenerator oll={this.state.data.oll} active={this.state.active} />
+					<AlgGenerator
+						oll={this.state.data.oll}
+						active={this.state.active}
+						lastGenerated={this.state.lastGenerated}
+						setLastGenerated={this.setLastGenerated}
+						onBack={this.state.onBack}
+						setOnBack={this.setOnBack}
+						/>
 					<button onClick={this.getStageSetter('choosing oll')}>Choose OLL</button>
 				</div>
 			);
