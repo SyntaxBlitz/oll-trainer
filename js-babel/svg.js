@@ -266,7 +266,7 @@ var AlgGenerator = function (_React$Component3) {
 
 		var _this5 = _possibleConstructorReturn(this, (AlgGenerator.__proto__ || Object.getPrototypeOf(AlgGenerator)).call(this, props));
 
-		_this5.state = { onBack: false, display: 'Press space to generate an OLL.' };
+		_this5.state = { onBack: false, display: '', ollChoices: _this5.getOllChoices(_this5.props) };
 
 		_this5.updateOnBackCheck = _this5.updateOnBackCheck.bind(_this5);
 		_this5.keyDown = _this5.keyDown.bind(_this5);
@@ -278,7 +278,6 @@ var AlgGenerator = function (_React$Component3) {
 		key: "updateOnBackCheck",
 		value: function updateOnBackCheck(event) {
 			this.setState({ onBack: event.target.checked });
-			console.log(event.target.checked);
 		}
 	}, {
 		key: "keyDown",
@@ -291,14 +290,11 @@ var AlgGenerator = function (_React$Component3) {
 	}, {
 		key: "generate",
 		value: function generate() {
-			var ollChoices = [];
-			for (var i = 0; i < this.props.active.length; i++) {
-				if (this.props.active[i]) {
-					ollChoices.push(i);
-				}
+			if (this.state.ollChoices.length === 0) {
+				return;
 			}
 
-			var ollCase = ollChoices[Math.floor(Math.random() * ollChoices.length)];
+			var ollCase = this.state.ollChoices[Math.floor(Math.random() * this.state.ollChoices.length)];
 
 			this.setState({ display: createOll(this.props.oll, ollCase, this.state.onBack) });
 		}
@@ -313,14 +309,48 @@ var AlgGenerator = function (_React$Component3) {
 			document.removeEventListener('keydown', this.keyDown);
 		}
 	}, {
+		key: "getOllChoices",
+		value: function getOllChoices(props) {
+			var ollChoices = [];
+			for (var i = 0; i < props.active.length; i++) {
+				if (props.active[i]) {
+					ollChoices.push(i);
+				}
+			}
+
+			return ollChoices;
+		}
+	}, {
+		key: "componentWillReceiveProps",
+		value: function componentWillReceiveProps(nextProps) {
+			this.setState({ ollChoices: getOllChoices(nextProps) });
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			if (this.props.oll !== null) {
+				var belowBox;
+				if (this.state.ollChoices.length === 0) {
+					belowBox = 'Choose some OLL to get started.';
+				} else {
+					belowBox = 'Press space to generate an OLL algorithm.';
+				}
+
 				return React.createElement(
 					"div",
 					null,
 					React.createElement("h1", { dangerouslySetInnerHTML: { __html: this.state.display } }),
-					React.createElement("input", { type: "checkbox", onChange: this.updateOnBackCheck, checked: this.state.onBack })
+					React.createElement(
+						"label",
+						null,
+						React.createElement("input", { type: "checkbox", onChange: this.updateOnBackCheck, checked: this.state.onBack }),
+						" Generate on back"
+					),
+					React.createElement(
+						"p",
+						null,
+						belowBox
+					)
 				);
 			} else {
 				console.error('should not happen 1');
@@ -346,10 +376,10 @@ var OllTrainer = function (_React$Component4) {
 
 		var activeArray = [];
 		for (var i = 0; i < 57; i++) {
-			activeArray.push(false);
+			activeArray.push(true);
 		}
 
-		_this6.state = { active: activeArray, stage: 'choosing oll', data: { appearances: null, multiSelectors: null, oll: null }, loaded: false };
+		_this6.state = { active: activeArray, stage: 'generating algorithms', data: { appearances: null, multiSelectors: null, oll: null }, loaded: false };
 
 		_this6.updateActive = _this6.updateActive.bind(_this6);
 		return _this6;

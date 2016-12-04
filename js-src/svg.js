@@ -199,7 +199,7 @@ class AlgGenerator extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {onBack: false, display: 'Press space to generate an OLL.'};
+		this.state = {onBack: false, display: '', ollChoices: this.getOllChoices(this.props)};
 
 		this.updateOnBackCheck = this.updateOnBackCheck.bind(this);
 		this.keyDown = this.keyDown.bind(this);
@@ -218,14 +218,11 @@ class AlgGenerator extends React.Component {
 	}
 
 	generate () {
-		var ollChoices = [];
-		for (let i = 0; i < this.props.active.length; i++) {
-			if (this.props.active[i]) {
-				ollChoices.push(i);
-			}
+		if (this.state.ollChoices.length === 0) {
+			return;
 		}
 
-		var ollCase = ollChoices[Math.floor(Math.random() * ollChoices.length)];
+		var ollCase = this.state.ollChoices[Math.floor(Math.random() * this.state.ollChoices.length)];
 
 		this.setState({display: createOll(this.props.oll, ollCase, this.state.onBack)});
 	}
@@ -238,12 +235,35 @@ class AlgGenerator extends React.Component {
 		document.removeEventListener('keydown', this.keyDown);
 	}
 
+	getOllChoices (props) {
+		var ollChoices = [];
+		for (let i = 0; i < props.active.length; i++) {
+			if (props.active[i]) {
+				ollChoices.push(i);
+			}
+		}
+
+		return ollChoices;
+	}
+
+	componentWillReceiveProps (nextProps) {
+		this.setState({ollChoices: getOllChoices(nextProps)});
+	}
+
 	render () {
 		if (this.props.oll !== null) {
+			var belowBox;
+			if (this.state.ollChoices.length === 0) {
+				belowBox = 'Choose some OLL to get started.';
+			} else {
+				belowBox = 'Press space to generate an OLL algorithm.';
+			}
+
 			return (
 				<div>
 					<h1 dangerouslySetInnerHTML={{__html: this.state.display}}></h1>
-					<input type="checkbox" onChange={this.updateOnBackCheck} checked={this.state.onBack} />
+					<label><input type="checkbox" onChange={this.updateOnBackCheck} checked={this.state.onBack} /> Generate on back</label>
+					<p>{belowBox}</p>
 				</div>
 			);
 		} else {
@@ -263,7 +283,7 @@ class OllTrainer extends React.Component {
 
 		var activeArray = [];
 		for (let i = 0; i < 57; i++) {
-			activeArray.push(false);
+			activeArray.push(true);
 		}
 
 		this.state = {active: activeArray, stage: 'generating algorithms', data: {appearances: null, multiSelectors: null, oll: null}, loaded: false};
