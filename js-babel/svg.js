@@ -333,7 +333,7 @@ var AlgGenerator = function (_React$Component3) {
 				if (this.state.ollChoices.length === 0) {
 					belowBox = 'Choose some OLL to get started.';
 				} else {
-					belowBox = 'Press space to generate an OLL algorithm.';
+					belowBox = 'Press space or click here to generate an OLL algorithm.';
 				}
 
 				return React.createElement(
@@ -348,7 +348,7 @@ var AlgGenerator = function (_React$Component3) {
 					),
 					React.createElement(
 						"p",
-						null,
+						{ onClick: this.generate },
 						belowBox
 					)
 				);

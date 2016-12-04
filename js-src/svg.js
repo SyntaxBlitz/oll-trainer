@@ -256,14 +256,14 @@ class AlgGenerator extends React.Component {
 			if (this.state.ollChoices.length === 0) {
 				belowBox = 'Choose some OLL to get started.';
 			} else {
-				belowBox = 'Press space to generate an OLL algorithm.';
+				belowBox = 'Press space or click here to generate an OLL algorithm.';
 			}
 
 			return (
 				<div>
 					<h1 dangerouslySetInnerHTML={{__html: this.state.display}}></h1>
 					<label><input type="checkbox" onChange={this.updateOnBackCheck} checked={this.state.onBack} /> Generate on back</label>
-					<p>{belowBox}</p>
+					<p onClick={this.generate}>{belowBox}</p>
 				</div>
 			);
 		} else {
