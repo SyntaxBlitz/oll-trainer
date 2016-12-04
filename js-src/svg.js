@@ -100,6 +100,10 @@ function CubeDiagram (props) {
 class MultiSelector extends React.Component {
 	constructor (props) {
 		super(props);
+
+		this.state = {showing: false};
+
+		this.toggleShowing = this.toggleShowing.bind(this);
 	}
 
 	onMultiSelectorClick (selector, on, event) {
@@ -107,24 +111,33 @@ class MultiSelector extends React.Component {
 		event.preventDefault();
 	}
 
+	toggleShowing () {
+		this.setState({showing: !this.state.showing});
+	}
+
 	render () {
 		if (this.props.multiSelectors !== null) {
 			return (
 				<div>
-					<table>
-						<tbody>
-							{
-								this.props.multiSelectors.map(
-									(selector, index) =>
-										<tr key={index}>
-											<td>{selector.name}</td>
-											<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, true)}>All</a></td>
-											<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, false)}>None</a></td>
-										</tr>
-								)
-							}
-						</tbody>
-					</table>
+					<div className={'multiSelectorPaneButton' + (this.state.showing ? ' open' : ' collapsed')} onClick={this.toggleShowing}>
+						{this.state.showing ? '\u00d7' : '\u00ab'}
+					</div>
+					<div className={'multiSelectorPane' + (this.state.showing ? ' open' : ' collapsed')}>
+						<table>
+							<tbody>
+								{
+									this.props.multiSelectors.map(
+										(selector, index) =>
+											<tr key={index}>
+												<td>{selector.name}</td>
+												<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, true)}>All</a></td>
+												<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, false)}>None</a></td>
+											</tr>
+									)
+								}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			);
 		} else {
@@ -172,6 +185,7 @@ class OllList extends React.Component {
 		if (this.props.appearances !== null) {
 			return (
 				<div className="outerDiv">
+					<p onClick={this.props.switchToAlgGenerator} className="with-pointer">Back</p>
 					{
 						this.props.appearances.map(
 							(picture, index) =>
@@ -225,10 +239,12 @@ class AlgGenerator extends React.Component {
 
 	componentDidMount () {
 		document.addEventListener('keydown', this.keyDown);
+		document.body.classList.add('alg-generator');
 	}
 
 	componentWillUnmount () {
 		document.removeEventListener('keydown', this.keyDown);
+		document.body.classList.remove('alg-generator');
 	}
 
 	getOllChoices (props) {
@@ -261,9 +277,12 @@ class AlgGenerator extends React.Component {
 
 			return (
 				<div>
-					<h1 dangerouslySetInnerHTML={{__html: this.props.lastGenerated}}></h1>
-					<label><input type="checkbox" onChange={this.checkedChanged} checked={this.props.onBack} /> Generate on back</label>
-					<p onClick={this.generate}>{belowBox}</p>
+					<div dangerouslySetInnerHTML={{__html: this.props.lastGenerated}} className="display"></div>
+					<label className="generateCheck"><input type="checkbox" onChange={this.checkedChanged} checked={this.props.onBack} /> Generate on back</label>
+					<div className="instructions">
+						<p onClick={this.generate}>{belowBox}</p>
+						<p onClick={this.props.switchToOll} className="with-pointer">choose oll</p>
+					</div>
 				</div>
 			);
 		} else {
@@ -301,6 +320,8 @@ class OllTrainer extends React.Component {
 		this.updateActive = this.updateActive.bind(this);
 		this.setOnBack = this.setOnBack.bind(this);
 		this.setLastGenerated = this.setLastGenerated.bind(this);
+		this.switchToOll = this.switchToOll.bind(this);
+		this.switchToAlgGenerator = this.switchToAlgGenerator.bind(this);
 	}
 
 	componentDidMount () {
@@ -313,8 +334,12 @@ class OllTrainer extends React.Component {
 		this.setState({active: newActiveArray});
 	}
 
-	getStageSetter (stage) {
-		return () => this.setState({stage: stage});
+	switchToOll (stage) {
+		this.setState({stage: 'choosing oll'});
+	}
+
+	switchToAlgGenerator (stage) {
+		this.setState({stage: 'generating algorithms'});
 	}
 
 	setOnBack (onBack) {
@@ -335,8 +360,13 @@ class OllTrainer extends React.Component {
 		if (this.state.stage === 'choosing oll') {
 			return (
 				<div>
-					<OllList appearances={this.state.data.appearances} multiSelectors={this.state.data.multiSelectors} active={this.state.active} updateActive={this.updateActive} />
-					<button onClick={this.getStageSetter('generating algorithms')}>Back</button>
+					<OllList
+						appearances={this.state.data.appearances}
+						multiSelectors={this.state.data.multiSelectors}
+						active={this.state.active}
+						updateActive={this.updateActive}
+						switchToAlgGenerator={this.switchToAlgGenerator}
+						/>
 				</div>
 			);
 		} else if (this.state.stage === 'generating algorithms') {
@@ -349,8 +379,8 @@ class OllTrainer extends React.Component {
 						setLastGenerated={this.setLastGenerated}
 						onBack={this.state.onBack}
 						setOnBack={this.setOnBack}
+						switchToOll={this.switchToOll}
 						/>
-					<button onClick={this.getStageSetter('choosing oll')}>Choose OLL</button>
 				</div>
 			);
 		}

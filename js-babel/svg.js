@@ -92,7 +92,12 @@ var MultiSelector = function (_React$Component) {
 	function MultiSelector(props) {
 		_classCallCheck(this, MultiSelector);
 
-		return _possibleConstructorReturn(this, (MultiSelector.__proto__ || Object.getPrototypeOf(MultiSelector)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (MultiSelector.__proto__ || Object.getPrototypeOf(MultiSelector)).call(this, props));
+
+		_this.state = { showing: false };
+
+		_this.toggleShowing = _this.toggleShowing.bind(_this);
+		return _this;
 	}
 
 	_createClass(MultiSelector, [{
@@ -100,6 +105,11 @@ var MultiSelector = function (_React$Component) {
 		value: function onMultiSelectorClick(selector, on, event) {
 			this.props.onChangeSelection(selector.affected, on);
 			event.preventDefault();
+		}
+	}, {
+		key: "toggleShowing",
+		value: function toggleShowing() {
+			this.setState({ showing: !this.state.showing });
 		}
 	}, {
 		key: "render",
@@ -111,40 +121,49 @@ var MultiSelector = function (_React$Component) {
 					"div",
 					null,
 					React.createElement(
-						"table",
-						null,
+						"div",
+						{ className: 'multiSelectorPaneButton' + (this.state.showing ? ' open' : ' collapsed'), onClick: this.toggleShowing },
+						this.state.showing ? "\xD7" : "\xAB"
+					),
+					React.createElement(
+						"div",
+						{ className: 'multiSelectorPane' + (this.state.showing ? ' open' : ' collapsed') },
 						React.createElement(
-							"tbody",
+							"table",
 							null,
-							this.props.multiSelectors.map(function (selector, index) {
-								return React.createElement(
-									"tr",
-									{ key: index },
-									React.createElement(
-										"td",
-										null,
-										selector.name
-									),
-									React.createElement(
-										"td",
-										null,
+							React.createElement(
+								"tbody",
+								null,
+								this.props.multiSelectors.map(function (selector, index) {
+									return React.createElement(
+										"tr",
+										{ key: index },
 										React.createElement(
-											"a",
-											{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, true) },
-											"All"
-										)
-									),
-									React.createElement(
-										"td",
-										null,
+											"td",
+											null,
+											selector.name
+										),
 										React.createElement(
-											"a",
-											{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, false) },
-											"None"
+											"td",
+											null,
+											React.createElement(
+												"a",
+												{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, true) },
+												"All"
+											)
+										),
+										React.createElement(
+											"td",
+											null,
+											React.createElement(
+												"a",
+												{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, false) },
+												"None"
+											)
 										)
-									)
-								);
-							})
+									);
+								})
+							)
 						)
 					)
 				);
@@ -229,6 +248,11 @@ var OllList = function (_React$Component2) {
 				return React.createElement(
 					"div",
 					{ className: "outerDiv" },
+					React.createElement(
+						"p",
+						{ onClick: this.props.switchToAlgGenerator, className: "with-pointer" },
+						"Back"
+					),
 					this.props.appearances.map(function (picture, index) {
 						return React.createElement(
 							"div",
@@ -297,11 +321,13 @@ var AlgGenerator = function (_React$Component3) {
 		key: "componentDidMount",
 		value: function componentDidMount() {
 			document.addEventListener('keydown', this.keyDown);
+			document.body.classList.add('alg-generator');
 		}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {
 			document.removeEventListener('keydown', this.keyDown);
+			document.body.classList.remove('alg-generator');
 		}
 	}, {
 		key: "getOllChoices",
@@ -340,17 +366,26 @@ var AlgGenerator = function (_React$Component3) {
 				return React.createElement(
 					"div",
 					null,
-					React.createElement("h1", { dangerouslySetInnerHTML: { __html: this.props.lastGenerated } }),
+					React.createElement("div", { dangerouslySetInnerHTML: { __html: this.props.lastGenerated }, className: "display" }),
 					React.createElement(
 						"label",
-						null,
+						{ className: "generateCheck" },
 						React.createElement("input", { type: "checkbox", onChange: this.checkedChanged, checked: this.props.onBack }),
 						" Generate on back"
 					),
 					React.createElement(
-						"p",
-						{ onClick: this.generate },
-						belowBox
+						"div",
+						{ className: "instructions" },
+						React.createElement(
+							"p",
+							{ onClick: this.generate },
+							belowBox
+						),
+						React.createElement(
+							"p",
+							{ onClick: this.props.switchToOll, className: "with-pointer" },
+							"choose oll"
+						)
 					)
 				);
 			} else {
@@ -395,6 +430,8 @@ var OllTrainer = function (_React$Component4) {
 		_this6.updateActive = _this6.updateActive.bind(_this6);
 		_this6.setOnBack = _this6.setOnBack.bind(_this6);
 		_this6.setLastGenerated = _this6.setLastGenerated.bind(_this6);
+		_this6.switchToOll = _this6.switchToOll.bind(_this6);
+		_this6.switchToAlgGenerator = _this6.switchToAlgGenerator.bind(_this6);
 		return _this6;
 	}
 
@@ -415,13 +452,14 @@ var OllTrainer = function (_React$Component4) {
 			this.setState({ active: newActiveArray });
 		}
 	}, {
-		key: "getStageSetter",
-		value: function getStageSetter(stage) {
-			var _this8 = this;
-
-			return function () {
-				return _this8.setState({ stage: stage });
-			};
+		key: "switchToOll",
+		value: function switchToOll(stage) {
+			this.setState({ stage: 'choosing oll' });
+		}
+	}, {
+		key: "switchToAlgGenerator",
+		value: function switchToAlgGenerator(stage) {
+			this.setState({ stage: 'generating algorithms' });
 		}
 	}, {
 		key: "setOnBack",
@@ -448,12 +486,13 @@ var OllTrainer = function (_React$Component4) {
 				return React.createElement(
 					"div",
 					null,
-					React.createElement(OllList, { appearances: this.state.data.appearances, multiSelectors: this.state.data.multiSelectors, active: this.state.active, updateActive: this.updateActive }),
-					React.createElement(
-						"button",
-						{ onClick: this.getStageSetter('generating algorithms') },
-						"Back"
-					)
+					React.createElement(OllList, {
+						appearances: this.state.data.appearances,
+						multiSelectors: this.state.data.multiSelectors,
+						active: this.state.active,
+						updateActive: this.updateActive,
+						switchToAlgGenerator: this.switchToAlgGenerator
+					})
 				);
 			} else if (this.state.stage === 'generating algorithms') {
 				return React.createElement(
@@ -465,13 +504,9 @@ var OllTrainer = function (_React$Component4) {
 						lastGenerated: this.state.lastGenerated,
 						setLastGenerated: this.setLastGenerated,
 						onBack: this.state.onBack,
-						setOnBack: this.setOnBack
-					}),
-					React.createElement(
-						"button",
-						{ onClick: this.getStageSetter('choosing oll') },
-						"Choose OLL"
-					)
+						setOnBack: this.setOnBack,
+						switchToOll: this.switchToOll
+					})
 				);
 			}
 		}

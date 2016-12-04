@@ -1,5 +1,38 @@
-body {
+html {
 	font-family: sans-serif;
+	height: 100%;
+}
+
+body.alg-generator {
+	background: linear-gradient(-15deg, #7AB317 0%, #A0C55F 100%);
+	color: #2A044A;
+}
+
+.display {
+	position: absolute;
+	top: 30%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+
+	font-size: 36pt;
+	font-weight: bold;
+}
+
+.instructions {
+	position: absolute;
+	top: 60%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.chooseOllButton {
+	position: absolute;
+	bottom: 10%;
+	left: 0;
+	width: 100%;
+	text-align: center;
 }
 
 svg.cubeDiagram {
@@ -31,4 +64,58 @@ svg.active .topFill {
 
 .ollDiv.active {
 	background-color: #f0f0f9;
+}
+
+.with-pointer {
+	cursor: pointer;
+}
+
+.multiSelectorPaneButton {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	width: 50px;
+	height: 50px;
+	font-size: 50px;
+	background-color: rgba(255, 255, 255, .9);
+
+	transition: transform 0.5s;
+	cursor: pointer;
+}
+
+.multiSelectorPane {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	width: 300px;
+	padding: 10px;
+	background-color: rgba(255, 255, 255, .9);
+
+	transition: transform 0.5s;
+}
+
+.multiSelectorPane table {
+	width: 100%;
+}
+
+.multiSelectorPane td {
+	text-align: left;
+}
+
+.multiSelectorPane a {
+	color: blue;
+	text-decoration: none;
+}
+
+.multiSelectorPane a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.multiSelectorPaneButton.open {
+	transform: translateX(-320px);
+}
+
+.multiSelectorPane.collapsed {
+	transform: translateX(100%);
 }
