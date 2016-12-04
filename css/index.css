@@ -1,9 +1,9 @@
 html {
 	font-family: sans-serif;
-	height: 100%;
+	min-height: 100%;
 }
 
-body.alg-generator {
+body {
 	background: linear-gradient(-15deg, #7AB317 0%, #A0C55F 100%);
 	color: #2A044A;
 }
@@ -54,7 +54,7 @@ svg.cubeDiagram {
 }
 
 svg .topFill {
-	fill: #bbb;
+	fill: #598410;
 }
 
 svg.active .topFill {
@@ -70,14 +70,13 @@ svg.active .topFill {
 	cursor: pointer;
 	width: 136px;
 	text-align: center;
-	background-color: #fff;
 	font-size: 16pt;
 	margin: 20px;
 	user-select: none;
 }
 
 .ollDiv.active {
-	background-color: #f0f0f9;
+	background-color: #ACD661;
 }
 
 .with-pointer {

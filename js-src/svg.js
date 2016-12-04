@@ -241,6 +241,10 @@ class AlgGenerator extends React.Component {
 	componentDidMount () {
 		document.addEventListener('keydown', this.keyDown);
 		document.body.classList.add('alg-generator');
+
+		if (this.props.lastGenerated === '') {
+			this.generate();
+		}
 	}
 
 	componentWillUnmount () {
@@ -279,7 +283,7 @@ class AlgGenerator extends React.Component {
 			if (this.state.ollChoices.length === 0) {
 				belowBox = 'Choose some OLL to get started.';
 			} else {
-				belowBox = 'Press space or click here to generate an OLL algorithm.';
+				belowBox = 'Press space or click here to generate an OLL case.';
 			}
 
 			return (
@@ -348,6 +352,7 @@ class OllTrainer extends React.Component {
 
 	updateActive (newActiveArray) {
 		this.setState({active: newActiveArray});
+		this.setLastGenerated('');
 	}
 
 	switchToOll (stage) {

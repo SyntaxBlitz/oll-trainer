@@ -323,6 +323,10 @@ var AlgGenerator = function (_React$Component3) {
 		value: function componentDidMount() {
 			document.addEventListener('keydown', this.keyDown);
 			document.body.classList.add('alg-generator');
+
+			if (this.props.lastGenerated === '') {
+				this.generate();
+			}
 		}
 	}, {
 		key: "componentWillUnmount",
@@ -367,7 +371,7 @@ var AlgGenerator = function (_React$Component3) {
 				if (this.state.ollChoices.length === 0) {
 					belowBox = 'Choose some OLL to get started.';
 				} else {
-					belowBox = 'Press space or click here to generate an OLL algorithm.';
+					belowBox = 'Press space or click here to generate an OLL case.';
 				}
 
 				return React.createElement(
@@ -467,6 +471,7 @@ var OllTrainer = function (_React$Component4) {
 		key: "updateActive",
 		value: function updateActive(newActiveArray) {
 			this.setState({ active: newActiveArray });
+			this.setLastGenerated('');
 		}
 	}, {
 		key: "switchToOll",
