@@ -472,8 +472,8 @@ var OllTrainer = function (_React$Component4) {
 			if (!this.state.loaded) {
 				return React.createElement(
 					"div",
-					null,
-					"loading!"
+					{ className: "loadingMessage" },
+					"Loading!"
 				);
 			}
 

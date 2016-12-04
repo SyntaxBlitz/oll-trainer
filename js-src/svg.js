@@ -347,7 +347,7 @@ class OllTrainer extends React.Component {
 	render () {
 		if (!this.state.loaded) {
 			return (
-				<div>loading!</div>
+				<div className="loadingMessage">Loading!</div>
 			);
 		}
 
