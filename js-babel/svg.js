@@ -116,65 +116,56 @@ var MultiSelector = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			if (this.props.multiSelectors !== null) {
-				return React.createElement(
+			return React.createElement(
+				"div",
+				null,
+				React.createElement(
 					"div",
-					null,
+					{ className: 'multiSelectorPaneButton' + (this.state.showing ? ' open' : ' collapsed'), onClick: this.toggleShowing },
+					this.state.showing ? "\xD7" : "\xAB"
+				),
+				React.createElement(
+					"div",
+					{ className: 'multiSelectorPane' + (this.state.showing ? ' open' : ' collapsed') },
 					React.createElement(
-						"div",
-						{ className: 'multiSelectorPaneButton' + (this.state.showing ? ' open' : ' collapsed'), onClick: this.toggleShowing },
-						this.state.showing ? "\xD7" : "\xAB"
-					),
-					React.createElement(
-						"div",
-						{ className: 'multiSelectorPane' + (this.state.showing ? ' open' : ' collapsed') },
+						"table",
+						null,
 						React.createElement(
-							"table",
+							"tbody",
 							null,
-							React.createElement(
-								"tbody",
-								null,
-								this.props.multiSelectors.map(function (selector, index) {
-									return React.createElement(
-										"tr",
-										{ key: index },
+							this.props.multiSelectors.map(function (selector, index) {
+								return React.createElement(
+									"tr",
+									{ key: index },
+									React.createElement(
+										"td",
+										null,
+										selector.name
+									),
+									React.createElement(
+										"td",
+										null,
 										React.createElement(
-											"td",
-											null,
-											selector.name
-										),
-										React.createElement(
-											"td",
-											null,
-											React.createElement(
-												"a",
-												{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, true) },
-												"All"
-											)
-										),
-										React.createElement(
-											"td",
-											null,
-											React.createElement(
-												"a",
-												{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, false) },
-												"None"
-											)
+											"a",
+											{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, true) },
+											"All"
 										)
-									);
-								})
-							)
+									),
+									React.createElement(
+										"td",
+										null,
+										React.createElement(
+											"a",
+											{ href: "#", onClick: _this2.onMultiSelectorClick.bind(_this2, selector, false) },
+											"None"
+										)
+									)
+								);
+							})
 						)
 					)
-				);
-			} else {
-				console.error('should not happen 3');
-				return React.createElement(
-					"div",
-					null,
-					"LOADING, BITCH"
-				);
-			}
+				)
+			);
 		}
 	}]);
 
@@ -244,38 +235,29 @@ var OllList = function (_React$Component2) {
 		value: function render() {
 			var _this4 = this;
 
-			if (this.props.appearances !== null) {
-				return React.createElement(
-					"div",
-					{ className: "outerDiv" },
-					React.createElement(
-						"p",
-						{ onClick: this.props.switchToAlgGenerator, className: "with-pointer" },
-						"Back"
-					),
-					this.props.appearances.map(function (picture, index) {
-						return React.createElement(
-							"div",
-							{ className: 'ollDiv' + (_this4.props.active[index] ? ' active' : ''), key: index + 1 + '', onClick: _this4.onOllClick.bind(_this4, index) },
-							React.createElement(CubeDiagram, { size: "116", data: picture, active: _this4.props.active[index] }),
-							React.createElement(
-								"strong",
-								null,
-								"OLL ",
-								index + 1 + ''
-							)
-						);
-					}),
-					React.createElement(MultiSelector, { onChangeSelection: this.onChangeSelection, multiSelectors: this.props.multiSelectors })
-				);
-			} else {
-				console.error('should not happen 2');
-				return React.createElement(
-					"div",
-					null,
-					"LOADING, BITCH"
-				);
-			}
+			return React.createElement(
+				"div",
+				{ className: "outerDiv" },
+				React.createElement(
+					"p",
+					{ onClick: this.props.switchToAlgGenerator, className: "with-pointer" },
+					"Back"
+				),
+				this.props.appearances.map(function (picture, index) {
+					return React.createElement(
+						"div",
+						{ className: 'ollDiv' + (_this4.props.active[index] ? ' active' : ''), key: index + 1 + '', onClick: _this4.onOllClick.bind(_this4, index) },
+						React.createElement(CubeDiagram, { size: "116", data: picture, active: _this4.props.active[index] }),
+						React.createElement(
+							"strong",
+							null,
+							"OLL ",
+							index + 1 + ''
+						)
+					);
+				}),
+				React.createElement(MultiSelector, { onChangeSelection: this.onChangeSelection, multiSelectors: this.props.multiSelectors })
+			);
 		}
 	}]);
 
@@ -366,57 +348,48 @@ var AlgGenerator = function (_React$Component3) {
 	}, {
 		key: "render",
 		value: function render() {
-			if (this.props.oll !== null) {
-				var belowBox;
-				if (this.state.ollChoices.length === 0) {
-					belowBox = 'Choose some OLL to get started.';
-				} else {
-					belowBox = 'Press space or click here to generate an OLL case.';
-				}
+			var belowBox;
+			if (this.state.ollChoices.length === 0) {
+				belowBox = 'Choose some OLL to get started.';
+			} else {
+				belowBox = 'Press space or click here to generate an OLL case.';
+			}
 
-				return React.createElement(
+			return React.createElement(
+				"div",
+				null,
+				React.createElement("div", { dangerouslySetInnerHTML: { __html: this.props.lastGenerated }, className: "display" }),
+				React.createElement(
 					"div",
-					null,
-					React.createElement("div", { dangerouslySetInnerHTML: { __html: this.props.lastGenerated }, className: "display" }),
+					{ className: "instructions" },
 					React.createElement(
-						"div",
-						{ className: "instructions" },
+						"p",
+						{ onClick: this.generate },
+						belowBox
+					),
+					React.createElement(
+						"p",
+						{ onClick: this.props.switchToOll, className: "with-pointer" },
+						"choose oll"
+					),
+					React.createElement(
+						"p",
+						null,
+						"generate on\xA0",
 						React.createElement(
-							"p",
-							{ onClick: this.generate },
-							belowBox
+							"a",
+							{ href: "#", onClick: this.changeToTop, className: 'backSelector' + (this.props.onBack ? '' : ' active') },
+							"top"
 						),
+						"\xA0|\xA0",
 						React.createElement(
-							"p",
-							{ onClick: this.props.switchToOll, className: "with-pointer" },
-							"choose oll"
-						),
-						React.createElement(
-							"p",
-							null,
-							"generate on\xA0",
-							React.createElement(
-								"a",
-								{ href: "#", onClick: this.changeToTop, className: 'backSelector' + (this.props.onBack ? '' : ' active') },
-								"top"
-							),
-							"\xA0|\xA0",
-							React.createElement(
-								"a",
-								{ href: "#", onClick: this.changeToBack, className: 'backSelector' + (this.props.onBack ? ' active' : '') },
-								"back"
-							)
+							"a",
+							{ href: "#", onClick: this.changeToBack, className: 'backSelector' + (this.props.onBack ? ' active' : '') },
+							"back"
 						)
 					)
-				);
-			} else {
-				console.error('should not happen 1');
-				return React.createElement(
-					"div",
-					null,
-					"LOADING, BITCH"
-				);
-			}
+				)
+			);
 		}
 	}]);
 

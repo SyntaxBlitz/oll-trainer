@@ -116,38 +116,29 @@ class MultiSelector extends React.Component {
 	}
 
 	render () {
-		if (this.props.multiSelectors !== null) {
-			return (
-				<div>
-					<div className={'multiSelectorPaneButton' + (this.state.showing ? ' open' : ' collapsed')} onClick={this.toggleShowing}>
-						{this.state.showing ? '\u00d7' : '\u00ab'}
-					</div>
-					<div className={'multiSelectorPane' + (this.state.showing ? ' open' : ' collapsed')}>
-						<table>
-							<tbody>
-								{
-									this.props.multiSelectors.map(
-										(selector, index) =>
-											<tr key={index}>
-												<td>{selector.name}</td>
-												<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, true)}>All</a></td>
-												<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, false)}>None</a></td>
-											</tr>
-									)
-								}
-							</tbody>
-						</table>
-					</div>
+		return (
+			<div>
+				<div className={'multiSelectorPaneButton' + (this.state.showing ? ' open' : ' collapsed')} onClick={this.toggleShowing}>
+					{this.state.showing ? '\u00d7' : '\u00ab'}
 				</div>
-			);
-		} else {
-			console.error('should not happen 3');
-			return (
-				<div>
-					LOADING, BITCH
+				<div className={'multiSelectorPane' + (this.state.showing ? ' open' : ' collapsed')}>
+					<table>
+						<tbody>
+							{
+								this.props.multiSelectors.map(
+									(selector, index) =>
+										<tr key={index}>
+											<td>{selector.name}</td>
+											<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, true)}>All</a></td>
+											<td><a href="#" onClick={this.onMultiSelectorClick.bind(this, selector, false)}>None</a></td>
+										</tr>
+								)
+							}
+						</tbody>
+					</table>
 				</div>
-			);
-		}
+			</div>
+		);
 	}
 }
 
@@ -182,30 +173,21 @@ class OllList extends React.Component {
 	}
 
 	render () {
-		if (this.props.appearances !== null) {
-			return (
-				<div className="outerDiv">
-					<p onClick={this.props.switchToAlgGenerator} className="with-pointer">Back</p>
-					{
-						this.props.appearances.map(
-							(picture, index) =>
-								<div className={'ollDiv' + (this.props.active[index] ? ' active' : '')} key={(index + 1) + ''} onClick={this.onOllClick.bind(this, index)}>
-									<CubeDiagram size="116" data={picture} active={this.props.active[index]} />
-									<strong>OLL {(index + 1) + ''}</strong>
-								</div>
-						)
-					}
-					<MultiSelector onChangeSelection={this.onChangeSelection} multiSelectors={this.props.multiSelectors} />
-				</div>
-			);
-		} else {
-			console.error('should not happen 2');
-			return (
-				<div>
-					LOADING, BITCH
-				</div>
-			);
-		}
+		return (
+			<div className="outerDiv">
+				<p onClick={this.props.switchToAlgGenerator} className="with-pointer">Back</p>
+				{
+					this.props.appearances.map(
+						(picture, index) =>
+							<div className={'ollDiv' + (this.props.active[index] ? ' active' : '')} key={(index + 1) + ''} onClick={this.onOllClick.bind(this, index)}>
+								<CubeDiagram size="116" data={picture} active={this.props.active[index]} />
+								<strong>OLL {(index + 1) + ''}</strong>
+							</div>
+					)
+				}
+				<MultiSelector onChangeSelection={this.onChangeSelection} multiSelectors={this.props.multiSelectors} />
+			</div>
+		);
 	}
 }
 
@@ -278,41 +260,32 @@ class AlgGenerator extends React.Component {
 	}
 
 	render () {
-		if (this.props.oll !== null) {
-			var belowBox;
-			if (this.state.ollChoices.length === 0) {
-				belowBox = 'Choose some OLL to get started.';
-			} else {
-				belowBox = 'Press space or click here to generate an OLL case.';
-			}
-
-			return (
-				<div>
-					<div dangerouslySetInnerHTML={{__html: this.props.lastGenerated}} className="display"></div>
-					<div className="instructions">
-						<p onClick={this.generate}>{belowBox}</p>
-						<p onClick={this.props.switchToOll} className="with-pointer">choose oll</p>
-						<p>
-							generate on&nbsp;
-							<a href="#" onClick={this.changeToTop} className={'backSelector' + (this.props.onBack ? '' : ' active')}>
-								top
-							</a>
-							&nbsp;|&nbsp;
-							<a href="#" onClick={this.changeToBack} className={'backSelector' + (this.props.onBack ? ' active' : '')}>
-								back
-							</a>
-						</p>
-					</div>
-				</div>
-			);
+		var belowBox;
+		if (this.state.ollChoices.length === 0) {
+			belowBox = 'Choose some OLL to get started.';
 		} else {
-			console.error('should not happen 1');
-			return (
-				<div>
-					LOADING, BITCH
-				</div>
-			);
+			belowBox = 'Press space or click here to generate an OLL case.';
 		}
+
+		return (
+			<div>
+				<div dangerouslySetInnerHTML={{__html: this.props.lastGenerated}} className="display"></div>
+				<div className="instructions">
+					<p onClick={this.generate}>{belowBox}</p>
+					<p onClick={this.props.switchToOll} className="with-pointer">choose oll</p>
+					<p>
+						generate on&nbsp;
+						<a href="#" onClick={this.changeToTop} className={'backSelector' + (this.props.onBack ? '' : ' active')}>
+							top
+						</a>
+						&nbsp;|&nbsp;
+						<a href="#" onClick={this.changeToBack} className={'backSelector' + (this.props.onBack ? ' active' : '')}>
+							back
+						</a>
+					</p>
+				</div>
+			</div>
+		);
 	}
 }
 
