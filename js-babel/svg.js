@@ -388,6 +388,11 @@ var AlgGenerator = function (_React$Component3) {
 							"back"
 						)
 					)
+				),
+				React.createElement(
+					"div",
+					{ className: "helpButton", onClick: this.props.switchToHelp },
+					"?"
 				)
 			);
 		}
@@ -395,6 +400,87 @@ var AlgGenerator = function (_React$Component3) {
 
 	return AlgGenerator;
 }(React.Component);
+
+function HelpScreen(props) {
+	return React.createElement(
+		"div",
+		{ className: "help" },
+		React.createElement(
+			"div",
+			{ onClick: props.switchToAlgGenerator, className: "with-pointer" },
+			"Back"
+		),
+		React.createElement(
+			"div",
+			null,
+			React.createElement(
+				"h1",
+				null,
+				"Tim's OLL Generator"
+			),
+			React.createElement(
+				"h2",
+				null,
+				"What is this?"
+			),
+			React.createElement(
+				"p",
+				null,
+				"This website lets you generate a 12-move algorithm that will result in a pre-OLL cube state."
+			),
+			React.createElement(
+				"p",
+				null,
+				"You can choose which OLL cases will appear after executing the algorithm. This is particularly useful when you want to challenge your recognition without doing a full solve, or you're training a small subset of OLL and don't want to worry about the algorithms you don't know yet."
+			),
+			React.createElement(
+				"h2",
+				null,
+				"How do I use it?"
+			),
+			React.createElement(
+				"p",
+				null,
+				"Just press the spacebar to generate an algorithm. When you apply this algorithm to a cube in the OLL state (even if it's not completely solved), you'll get a randomly-selected OLL case. Chances are, you won't recognize the OLL case just by looking at the algorithm provided, because the algorithm is chosen randomly from every possible twelve-move algorithm that can get to that state."
+			),
+			React.createElement(
+				"p",
+				null,
+				"If you want to make it harder for you to recognize the OLL case prematurely while you're executing the provided algorithm, you can switch the algorithm generator to end with the OLL case on the back of the cube. If you do this, just turn the face you want to train OLL on to be the B face before scrambling."
+			),
+			React.createElement(
+				"p",
+				null,
+				"To change the generated OLL cases, click \"choose oll\" and click any OLL case to toggle whether or not it's activated. There's an expandable menu in the top-right that will let you select/deselect entire batches of cases at once."
+			),
+			React.createElement(
+				"h2",
+				null,
+				"Is there a mobile version?"
+			),
+			React.createElement(
+				"p",
+				null,
+				"Nope! But it's not out of the question for the future."
+			),
+			React.createElement(
+				"h2",
+				null,
+				"Is there a PLL version?"
+			),
+			React.createElement(
+				"p",
+				null,
+				"Nope! But it's not out of the question for the future."
+			)
+		),
+		React.createElement(
+			"div",
+			{ onClick: props.switchToAlgGenerator, className: "with-pointer" },
+			"Back"
+		)
+	);
+}
 
 var OllTrainer = function (_React$Component4) {
 	_inherits(OllTrainer, _React$Component4);
@@ -426,6 +512,7 @@ var OllTrainer = function (_React$Component4) {
 		_this6.setLastGenerated = _this6.setLastGenerated.bind(_this6);
 		_this6.switchToOll = _this6.switchToOll.bind(_this6);
 		_this6.switchToAlgGenerator = _this6.switchToAlgGenerator.bind(_this6);
+		_this6.switchToHelp = _this6.switchToHelp.bind(_this6);
 		return _this6;
 	}
 
@@ -455,6 +542,11 @@ var OllTrainer = function (_React$Component4) {
 		key: "switchToAlgGenerator",
 		value: function switchToAlgGenerator(stage) {
 			this.setState({ stage: 'generating algorithms' });
+		}
+	}, {
+		key: "switchToHelp",
+		value: function switchToHelp(stage) {
+			this.setState({ stage: 'help' });
 		}
 	}, {
 		key: "setOnBack",
@@ -500,8 +592,15 @@ var OllTrainer = function (_React$Component4) {
 						setLastGenerated: this.setLastGenerated,
 						onBack: this.state.onBack,
 						setOnBack: this.setOnBack,
-						switchToOll: this.switchToOll
+						switchToOll: this.switchToOll,
+						switchToHelp: this.switchToHelp
 					})
+				);
+			} else if (this.state.stage === 'help') {
+				return React.createElement(
+					"div",
+					null,
+					React.createElement(HelpScreen, { switchToAlgGenerator: this.switchToAlgGenerator })
 				);
 			}
 		}

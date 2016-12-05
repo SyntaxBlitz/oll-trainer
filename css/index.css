@@ -143,3 +143,22 @@ svg.active .topFill {
 .multiSelectorPane.collapsed {
 	transform: translateX(100%);
 }
+
+.helpButton {
+	position: absolute;
+	cursor: pointer;
+	bottom: 20px;
+	right: 35px;
+	font-size: 36pt;
+}
+
+.help {
+	position: absolute;
+	top: 20%;
+	left: 30%;
+	height: 60%;
+	width: 40%;
+	background: #C1D996;
+	padding: 10px;
+	overflow: auto;
+}
