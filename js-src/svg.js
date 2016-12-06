@@ -327,6 +327,10 @@ function HelpScreen (props) {
 				<p>
 					Nope! But it's not out of the question for the future.
 				</p>
+
+				<p>
+					By <a href="http://timothyaveni.com/">Timothy J. Aveni</a>. Source code (to be released soon) and artwork under the MIT license.
+				</p>
 			</div>
 			<div onClick={props.switchToAlgGenerator} className="with-pointer">Back</div>
 		</div>

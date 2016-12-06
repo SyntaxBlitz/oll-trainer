@@ -152,6 +152,10 @@ svg.active .topFill {
 	font-size: 36pt;
 }
 
+.helpButton:hover {
+	color: #3C0E62;
+}
+
 .help {
 	position: absolute;
 	top: 20%;
@@ -161,4 +165,14 @@ svg.active .topFill {
 	background: #C1D996;
 	padding: 10px;
 	overflow: auto;
+}
+
+.help a {
+	color: #2A044A;
+	text-decoration: underline;
+}
+
+.help a:hover {
+	color: #2A044A;
+	text-decoration: none;
 }

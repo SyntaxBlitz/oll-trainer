@@ -472,6 +472,17 @@ function HelpScreen(props) {
 				"p",
 				null,
 				"Nope! But it's not out of the question for the future."
+			),
+			React.createElement(
+				"p",
+				null,
+				"By ",
+				React.createElement(
+					"a",
+					{ href: "http://timothyaveni.com/" },
+					"Timothy J. Aveni"
+				),
+				". Source code (to be released soon) and artwork under the MIT license."
 			)
 		),
 		React.createElement(
