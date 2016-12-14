@@ -1,6 +1,6 @@
-var createOll = function (ollAlgorithms, ollCase, onBack) {
-	var algorithms = ollAlgorithms[ollCase];
-	var algorithmString = algorithms[Math.floor(Math.random() * algorithms.length)];
+export default function createAlgorithm (algorithms, thisCase, onBack) {
+	var caseAlgorithms = algorithms[thisCase];
+	var algorithmString = caseAlgorithms[Math.floor(Math.random() * caseAlgorithms.length)];
 	var algorithm = algorithmString.split(' ');
 
 	var upperRotations = Math.floor(Math.random() * 4);
