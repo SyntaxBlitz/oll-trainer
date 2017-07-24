@@ -56,15 +56,15 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _ollList = __webpack_require__(186);
+	var _ollList = __webpack_require__(183);
 
 	var _ollList2 = _interopRequireDefault(_ollList);
 
-	var _algGenerator = __webpack_require__(188);
+	var _algGenerator = __webpack_require__(184);
 
 	var _algGenerator2 = _interopRequireDefault(_algGenerator);
 
-	var _helpScreen = __webpack_require__(189);
+	var _helpScreen = __webpack_require__(186);
 
 	var _helpScreen2 = _interopRequireDefault(_helpScreen);
 
@@ -21897,8 +21897,300 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 183 */,
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ollRenderer = __webpack_require__(187);
+
+	var _ollRenderer2 = _interopRequireDefault(_ollRenderer);
+
+	var _multiSelector = __webpack_require__(188);
+
+	var _multiSelector2 = _interopRequireDefault(_multiSelector);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var OllList = function (_React$Component) {
+		_inherits(OllList, _React$Component);
+
+		function OllList(props) {
+			_classCallCheck(this, OllList);
+
+			var _this = _possibleConstructorReturn(this, (OllList.__proto__ || Object.getPrototypeOf(OllList)).call(this, props));
+
+			_this.onOllClick = _this.onOllClick.bind(_this);
+			_this.onChangeSelection = _this.onChangeSelection.bind(_this);
+			return _this;
+		}
+
+		_createClass(OllList, [{
+			key: 'onOllClick',
+			value: function onOllClick(index) {
+				var newActiveArray = this.props.active.slice();
+
+				if (this.props.active[index]) {
+					newActiveArray[index] = false;
+				} else {
+					newActiveArray[index] = true;
+				}
+
+				this.props.updateActive(newActiveArray);
+			}
+		}, {
+			key: 'onChangeSelection',
+			value: function onChangeSelection(affected, on) {
+				var newActiveArray = this.props.active.slice();
+
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+
+				try {
+					for (var _iterator = affected[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var index = _step.value;
+
+						newActiveArray[index - 1] = on; // affected OLLs are index + 1
+					}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+
+				this.props.updateActive(newActiveArray);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'outerDiv' },
+					_react2.default.createElement(
+						'p',
+						{ onClick: this.props.switchToAlgGenerator, className: 'with-pointer' },
+						'Back'
+					),
+					this.props.appearances.map(function (picture, index) {
+						return _react2.default.createElement(
+							'div',
+							{ className: 'ollDiv' + (_this2.props.active[index] ? ' active' : ''), key: index + 1 + '', onClick: _this2.onOllClick.bind(_this2, index) },
+							_react2.default.createElement(_ollRenderer2.default, { size: '116', data: picture, active: _this2.props.active[index] }),
+							_react2.default.createElement(
+								'strong',
+								null,
+								'OLL ',
+								index + 1 + ''
+							)
+						);
+					}),
+					_react2.default.createElement(_multiSelector2.default, { onChangeSelection: this.onChangeSelection, multiSelectors: this.props.multiSelectors })
+				);
+			}
+		}]);
+
+		return OllList;
+	}(_react2.default.Component);
+
+	exports.default = OllList;
+
+/***/ },
 /* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _generateAlgorithm = __webpack_require__(185);
+
+	var _generateAlgorithm2 = _interopRequireDefault(_generateAlgorithm);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AlgGenerator = function (_React$Component) {
+		_inherits(AlgGenerator, _React$Component);
+
+		function AlgGenerator(props) {
+			_classCallCheck(this, AlgGenerator);
+
+			var _this = _possibleConstructorReturn(this, (AlgGenerator.__proto__ || Object.getPrototypeOf(AlgGenerator)).call(this, props));
+
+			_this.state = { choices: _this.getChoices(_this.props) };
+
+			_this.keyDown = _this.keyDown.bind(_this);
+			_this.generate = _this.generate.bind(_this);
+			_this.changeToTop = _this.changeToTop.bind(_this);
+			_this.changeToBack = _this.changeToBack.bind(_this);
+			return _this;
+		}
+
+		_createClass(AlgGenerator, [{
+			key: 'keyDown',
+			value: function keyDown(event) {
+				if (event.keyCode === 32) {
+					this.generate();
+					event.preventDefault();
+				}
+			}
+		}, {
+			key: 'generate',
+			value: function generate() {
+				if (this.state.choices.length === 0) {
+					return;
+				}
+
+				var pllCase = this.state.choices[Math.floor(Math.random() * this.state.choices.length)];
+
+				this.props.setLastGenerated((0, _generateAlgorithm2.default)(this.props.scrambleAlgs, pllCase, this.props.onBack));
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				document.addEventListener('keydown', this.keyDown);
+				document.body.classList.add('alg-generator');
+
+				if (this.props.lastGenerated === '') {
+					this.generate();
+				}
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				document.removeEventListener('keydown', this.keyDown);
+				document.body.classList.remove('alg-generator');
+			}
+		}, {
+			key: 'getChoices',
+			value: function getChoices(props) {
+				var choices = [];
+				for (var i = 0; i < props.active.length; i++) {
+					if (props.active[i]) {
+						choices.push(i);
+					}
+				}
+
+				return choices;
+			}
+		}, {
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps(nextProps) {
+				this.setState({ choices: this.getChoices(nextProps) });
+			}
+		}, {
+			key: 'changeToTop',
+			value: function changeToTop(event) {
+				this.props.setOnBack(false);
+				event.preventDefault();
+			}
+		}, {
+			key: 'changeToBack',
+			value: function changeToBack(event) {
+				this.props.setOnBack(true);
+				event.preventDefault();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var belowBox;
+				if (this.state.choices.length === 0) {
+					belowBox = 'Choose some PLL to get started.';
+				} else {
+					belowBox = 'Press space or click here to generate an PLL case.';
+				}
+
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.lastGenerated }, className: 'display' }),
+					_react2.default.createElement(
+						'div',
+						{ className: 'instructions' },
+						_react2.default.createElement(
+							'p',
+							{ onClick: this.generate },
+							belowBox
+						),
+						_react2.default.createElement(
+							'p',
+							{ onClick: this.props.switchToChooser, className: 'with-pointer' },
+							'choose pll'
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							'generate on\xA0',
+							_react2.default.createElement(
+								'a',
+								{ href: '#', onClick: this.changeToTop, className: 'backSelector' + (this.props.onBack ? '' : ' active') },
+								'top'
+							),
+							'\xA0|\xA0',
+							_react2.default.createElement(
+								'a',
+								{ href: '#', onClick: this.changeToBack, className: 'backSelector' + (this.props.onBack ? ' active' : '') },
+								'back'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'helpButton', onClick: this.props.switchToHelp },
+						'?'
+					)
+				);
+			}
+		}]);
+
+		return AlgGenerator;
+	}(_react2.default.Component);
+
+	exports.default = AlgGenerator;
+
+/***/ },
+/* 185 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22007,7 +22299,116 @@
 	};
 
 /***/ },
-/* 185 */
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = HelpScreen;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function HelpScreen(props) {
+		return _react2.default.createElement(
+			"div",
+			{ className: "help" },
+			_react2.default.createElement(
+				"div",
+				{ onClick: props.switchToAlgGenerator, className: "with-pointer" },
+				"Back"
+			),
+			_react2.default.createElement(
+				"div",
+				null,
+				_react2.default.createElement(
+					"h1",
+					null,
+					"Tim's OLL Generator"
+				),
+				_react2.default.createElement(
+					"h2",
+					null,
+					"What is this?"
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"This website lets you generate a 12-move algorithm that will result in a pre-OLL cube state."
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"You can choose which OLL cases will appear after executing the algorithm. This is particularly useful when you want to challenge your recognition without doing a full solve, or you're training a small subset of OLL and don't want to worry about the algorithms you don't know yet."
+				),
+				_react2.default.createElement(
+					"h2",
+					null,
+					"How do I use it?"
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Just press the spacebar to generate an algorithm. When you apply this algorithm to a cube in the OLL state (even if it's not completely solved), you'll get a randomly-selected OLL case. Chances are, you won't recognize the OLL case just by looking at the algorithm provided, because the algorithm is chosen randomly from every possible twelve-move algorithm that can get to that state."
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"If you want to make it harder for you to recognize the OLL case prematurely while you're executing the provided algorithm, you can switch the algorithm generator to end with the OLL case on the back of the cube. If you do this, just turn the face you want to train OLL on to be the B face before scrambling."
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"To change the generated OLL cases, click \"choose oll\" and click any OLL case to toggle whether or not it's activated. There's an expandable menu in the top-right that will let you select/deselect entire batches of cases at once."
+				),
+				_react2.default.createElement(
+					"h2",
+					null,
+					"Is there a mobile version?"
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Nope! But it's not out of the question for the future."
+				),
+				_react2.default.createElement(
+					"h2",
+					null,
+					"Is there a PLL version?"
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"Nope! But it's not out of the question for the future."
+				),
+				_react2.default.createElement(
+					"p",
+					null,
+					"By ",
+					_react2.default.createElement(
+						"a",
+						{ href: "http://timothyaveni.com/" },
+						"Timothy J. Aveni"
+					),
+					". Source code (to be released soon) and artwork under the MIT license."
+				)
+			),
+			_react2.default.createElement(
+				"div",
+				{ onClick: props.switchToAlgGenerator, className: "with-pointer" },
+				"Back"
+			)
+		);
+	}
+
+/***/ },
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22102,133 +22503,7 @@
 	}
 
 /***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _ollRenderer = __webpack_require__(185);
-
-	var _ollRenderer2 = _interopRequireDefault(_ollRenderer);
-
-	var _multiSelector = __webpack_require__(187);
-
-	var _multiSelector2 = _interopRequireDefault(_multiSelector);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var OllList = function (_React$Component) {
-		_inherits(OllList, _React$Component);
-
-		function OllList(props) {
-			_classCallCheck(this, OllList);
-
-			var _this = _possibleConstructorReturn(this, (OllList.__proto__ || Object.getPrototypeOf(OllList)).call(this, props));
-
-			_this.onOllClick = _this.onOllClick.bind(_this);
-			_this.onChangeSelection = _this.onChangeSelection.bind(_this);
-			return _this;
-		}
-
-		_createClass(OllList, [{
-			key: 'onOllClick',
-			value: function onOllClick(index) {
-				var newActiveArray = this.props.active.slice();
-
-				if (this.props.active[index]) {
-					newActiveArray[index] = false;
-				} else {
-					newActiveArray[index] = true;
-				}
-
-				this.props.updateActive(newActiveArray);
-			}
-		}, {
-			key: 'onChangeSelection',
-			value: function onChangeSelection(affected, on) {
-				var newActiveArray = this.props.active.slice();
-
-				var _iteratorNormalCompletion = true;
-				var _didIteratorError = false;
-				var _iteratorError = undefined;
-
-				try {
-					for (var _iterator = affected[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-						var index = _step.value;
-
-						newActiveArray[index - 1] = on; // affected OLLs are index + 1
-					}
-				} catch (err) {
-					_didIteratorError = true;
-					_iteratorError = err;
-				} finally {
-					try {
-						if (!_iteratorNormalCompletion && _iterator.return) {
-							_iterator.return();
-						}
-					} finally {
-						if (_didIteratorError) {
-							throw _iteratorError;
-						}
-					}
-				}
-
-				this.props.updateActive(newActiveArray);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-
-				return _react2.default.createElement(
-					'div',
-					{ className: 'outerDiv' },
-					_react2.default.createElement(
-						'p',
-						{ onClick: this.props.switchToAlgGenerator, className: 'with-pointer' },
-						'Back'
-					),
-					this.props.appearances.map(function (picture, index) {
-						return _react2.default.createElement(
-							'div',
-							{ className: 'ollDiv' + (_this2.props.active[index] ? ' active' : ''), key: index + 1 + '', onClick: _this2.onOllClick.bind(_this2, index) },
-							_react2.default.createElement(_ollRenderer2.default, { size: '116', data: picture, active: _this2.props.active[index] }),
-							_react2.default.createElement(
-								'strong',
-								null,
-								'OLL ',
-								index + 1 + ''
-							)
-						);
-					}),
-					_react2.default.createElement(_multiSelector2.default, { onChangeSelection: this.onChangeSelection, multiSelectors: this.props.multiSelectors })
-				);
-			}
-		}]);
-
-		return OllList;
-	}(_react2.default.Component);
-
-	exports.default = OllList;
-
-/***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22338,282 +22613,6 @@
 	}(_react2.default.Component);
 
 	exports.default = MultiSelector;
-
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _generateAlgorithm = __webpack_require__(184);
-
-	var _generateAlgorithm2 = _interopRequireDefault(_generateAlgorithm);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AlgGenerator = function (_React$Component) {
-		_inherits(AlgGenerator, _React$Component);
-
-		function AlgGenerator(props) {
-			_classCallCheck(this, AlgGenerator);
-
-			var _this = _possibleConstructorReturn(this, (AlgGenerator.__proto__ || Object.getPrototypeOf(AlgGenerator)).call(this, props));
-
-			_this.state = { ollChoices: _this.getOllChoices(_this.props) };
-
-			_this.keyDown = _this.keyDown.bind(_this);
-			_this.generate = _this.generate.bind(_this);
-			_this.changeToTop = _this.changeToTop.bind(_this);
-			_this.changeToBack = _this.changeToBack.bind(_this);
-			return _this;
-		}
-
-		_createClass(AlgGenerator, [{
-			key: 'keyDown',
-			value: function keyDown(event) {
-				if (event.keyCode === 32) {
-					this.generate();
-					event.preventDefault();
-				}
-			}
-		}, {
-			key: 'generate',
-			value: function generate() {
-				if (this.state.ollChoices.length === 0) {
-					return;
-				}
-
-				var ollCase = this.state.ollChoices[Math.floor(Math.random() * this.state.ollChoices.length)];
-
-				this.props.setLastGenerated((0, _generateAlgorithm2.default)(this.props.oll, ollCase, this.props.onBack));
-			}
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				document.addEventListener('keydown', this.keyDown);
-				document.body.classList.add('alg-generator');
-
-				if (this.props.lastGenerated === '') {
-					this.generate();
-				}
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				document.removeEventListener('keydown', this.keyDown);
-				document.body.classList.remove('alg-generator');
-			}
-		}, {
-			key: 'getOllChoices',
-			value: function getOllChoices(props) {
-				var ollChoices = [];
-				for (var i = 0; i < props.active.length; i++) {
-					if (props.active[i]) {
-						ollChoices.push(i);
-					}
-				}
-
-				return ollChoices;
-			}
-		}, {
-			key: 'componentWillReceiveProps',
-			value: function componentWillReceiveProps(nextProps) {
-				this.setState({ ollChoices: this.getOllChoices(nextProps) });
-			}
-		}, {
-			key: 'changeToTop',
-			value: function changeToTop(event) {
-				this.props.setOnBack(false);
-				event.preventDefault();
-			}
-		}, {
-			key: 'changeToBack',
-			value: function changeToBack(event) {
-				this.props.setOnBack(true);
-				event.preventDefault();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var belowBox;
-				if (this.state.ollChoices.length === 0) {
-					belowBox = 'Choose some OLL to get started.';
-				} else {
-					belowBox = 'Press space or click here to generate an OLL case.';
-				}
-
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.lastGenerated }, className: 'display' }),
-					_react2.default.createElement(
-						'div',
-						{ className: 'instructions' },
-						_react2.default.createElement(
-							'p',
-							{ onClick: this.generate },
-							belowBox
-						),
-						_react2.default.createElement(
-							'p',
-							{ onClick: this.props.switchToOll, className: 'with-pointer' },
-							'choose oll'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'generate on\xA0',
-							_react2.default.createElement(
-								'a',
-								{ href: '#', onClick: this.changeToTop, className: 'backSelector' + (this.props.onBack ? '' : ' active') },
-								'top'
-							),
-							'\xA0|\xA0',
-							_react2.default.createElement(
-								'a',
-								{ href: '#', onClick: this.changeToBack, className: 'backSelector' + (this.props.onBack ? ' active' : '') },
-								'back'
-							)
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'helpButton', onClick: this.props.switchToHelp },
-						'?'
-					)
-				);
-			}
-		}]);
-
-		return AlgGenerator;
-	}(_react2.default.Component);
-
-	exports.default = AlgGenerator;
-
-/***/ },
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = HelpScreen;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function HelpScreen(props) {
-		return _react2.default.createElement(
-			"div",
-			{ className: "help" },
-			_react2.default.createElement(
-				"div",
-				{ onClick: props.switchToAlgGenerator, className: "with-pointer" },
-				"Back"
-			),
-			_react2.default.createElement(
-				"div",
-				null,
-				_react2.default.createElement(
-					"h1",
-					null,
-					"Tim's OLL Generator"
-				),
-				_react2.default.createElement(
-					"h2",
-					null,
-					"What is this?"
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"This website lets you generate a 12-move algorithm that will result in a pre-OLL cube state."
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"You can choose which OLL cases will appear after executing the algorithm. This is particularly useful when you want to challenge your recognition without doing a full solve, or you're training a small subset of OLL and don't want to worry about the algorithms you don't know yet."
-				),
-				_react2.default.createElement(
-					"h2",
-					null,
-					"How do I use it?"
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"Just press the spacebar to generate an algorithm. When you apply this algorithm to a cube in the OLL state (even if it's not completely solved), you'll get a randomly-selected OLL case. Chances are, you won't recognize the OLL case just by looking at the algorithm provided, because the algorithm is chosen randomly from every possible twelve-move algorithm that can get to that state."
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"If you want to make it harder for you to recognize the OLL case prematurely while you're executing the provided algorithm, you can switch the algorithm generator to end with the OLL case on the back of the cube. If you do this, just turn the face you want to train OLL on to be the B face before scrambling."
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"To change the generated OLL cases, click \"choose oll\" and click any OLL case to toggle whether or not it's activated. There's an expandable menu in the top-right that will let you select/deselect entire batches of cases at once."
-				),
-				_react2.default.createElement(
-					"h2",
-					null,
-					"Is there a mobile version?"
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"Nope! But it's not out of the question for the future."
-				),
-				_react2.default.createElement(
-					"h2",
-					null,
-					"Is there a PLL version?"
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"Nope! But it's not out of the question for the future."
-				),
-				_react2.default.createElement(
-					"p",
-					null,
-					"By ",
-					_react2.default.createElement(
-						"a",
-						{ href: "http://timothyaveni.com/" },
-						"Timothy J. Aveni"
-					),
-					". Source code (to be released soon) and artwork under the MIT license."
-				)
-			),
-			_react2.default.createElement(
-				"div",
-				{ onClick: props.switchToAlgGenerator, className: "with-pointer" },
-				"Back"
-			)
-		);
-	}
 
 /***/ }
 /******/ ]);
