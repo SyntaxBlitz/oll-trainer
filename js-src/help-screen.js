@@ -37,7 +37,7 @@ export default function HelpScreen (props) {
 				</p>
 
 				<p>
-					By <a href="http://timothyaveni.com/">Timothy J. Aveni</a>. Source code (to be released soon) and artwork under the MIT license.
+					By <a href="http://timothyaveni.com/">Timothy J. Aveni</a>. <a href="https://github.com/SyntaxBlitz/oll-trainer">Source code</a> and artwork under the MIT license.
 				</p>
 			</div>
 			<div onClick={props.switchToAlgGenerator} className="with-pointer">Back</div>
