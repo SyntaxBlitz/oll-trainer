@@ -74,7 +74,7 @@ class OllTrainer extends React.Component {
 
 		if (this.state.stage === 'choosing oll') {
 			return (
-				<div>
+				<div className="main-container">
 					<OllList
 						appearances={this.state.data.appearances}
 						multiSelectors={this.state.data.multiSelectors}
@@ -86,7 +86,7 @@ class OllTrainer extends React.Component {
 			);
 		} else if (this.state.stage === 'generating algorithms') {
 			return (
-				<div>
+				<div className="main-container">
 					<AlgGenerator
 						oll={this.state.data.oll}
 						active={this.state.active}
@@ -101,7 +101,7 @@ class OllTrainer extends React.Component {
 			);
 		} else if (this.state.stage === 'help') {
 			return (
-				<div>
+				<div className="main-container">
 					<HelpScreen switchToAlgGenerator={this.switchToAlgGenerator} />
 				</div>
 			);
