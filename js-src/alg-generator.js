@@ -8,6 +8,7 @@ export default class AlgGenerator extends React.Component {
 		this.state = {ollChoices: this.getOllChoices(this.props)};
 
 		this.keyDown = this.keyDown.bind(this);
+		this.mouseDown = this.mouseDown.bind(this);
 		this.generate = this.generate.bind(this);
 		this.changeToTop = this.changeToTop.bind(this);
 		this.changeToBack = this.changeToBack.bind(this);
@@ -18,6 +19,11 @@ export default class AlgGenerator extends React.Component {
 			this.generate();
 			event.preventDefault();
 		}
+	}
+
+	mouseDown (event) {
+		this.generate();
+		event.preventDefault();
 	}
 
 	generate () {
@@ -78,10 +84,8 @@ export default class AlgGenerator extends React.Component {
 		}
 
 		return (
-			<div>
-				<div dangerouslySetInnerHTML={{__html: this.props.lastGenerated}} className="display"></div>
-				<div className="instructions">
-					<p onClick={this.generate}>{belowBox}</p>
+			<div className="main-display-container">
+				<div className="navbar">
 					<p onClick={this.props.switchToOll} className="with-pointer">choose oll</p>
 					<p>
 						generate on&nbsp;
@@ -93,6 +97,12 @@ export default class AlgGenerator extends React.Component {
 							back
 						</a>
 					</p>
+				</div>
+				<div className="display-container" onMouseDown={this.mouseDown} onTouchStart={this.touchStart}>
+					<div dangerouslySetInnerHTML={{__html: this.props.lastGenerated}} className="display" />
+					<div className="instructions">
+						<p onClick={this.generate}>{belowBox}</p>
+					</div>
 				</div>
 				<div className="helpButton" onClick={this.props.switchToHelp}>
 					?

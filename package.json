@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "React fun! Will probably turn into an OLL trainer.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "babel-core": "^6.26.0"
+  },
   "devDependencies": {
     "babel-loader": "^6.2.9",
     "babel-preset-latest": "^6.16.0",

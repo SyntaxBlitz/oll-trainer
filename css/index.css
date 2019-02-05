@@ -1,11 +1,27 @@
 html {
 	font-family: sans-serif;
-	min-height: 100%;
+	height: 100%;
 }
 
 body {
 	background: linear-gradient(-15deg, #7AB317 0%, #A0C55F 100%);
 	color: #2A044A;
+	margin: 0;
+	height: 100%;
+}
+
+#root {
+	height: 100%;
+}
+
+.main-container {
+	height: 100%;
+}
+
+.main-display-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 .loadingMessage {
@@ -19,21 +35,37 @@ body {
 	font-weight: bold;
 }
 
+.navbar {
+	background: #0C0;
+	width: calc(100% - 20px);
+	text-align: center;
+	padding: 10px;
+	box-shadow: 0 5px 10px darkgreen;
+}
+
+.display-container {
+	height: 100%;
+}
+
 .display {
-	position: absolute;
-	top: 30%;
-	left: 0;
 	width: 100%;
 	text-align: center;
+	flex: 1;
+	height: 50vh;
 
 	font-size: 36pt;
 	font-weight: bold;
+	line-height: 50vh;
+
+	touch-action: none;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .instructions {
-	position: absolute;
-	top: 60%;
-	left: 0;
 	width: 100%;
 	text-align: center;
 }
