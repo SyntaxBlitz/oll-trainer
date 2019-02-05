@@ -57,6 +57,8 @@ body {
 	font-weight: bold;
 	line-height: 50vh;
 
+	touch-action: none;
+
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
